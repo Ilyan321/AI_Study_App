@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study App | Developer Interface</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- DOMPurify for XSS Sanitization (Industry Standard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+
+    <!-- Highlight.js for Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts: Inter (Sans) and Fira Code (Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Application Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="h-screen flex flex-col overflow-hidden selection:bg-[#0ea5e9] selection:text-white">
+
+    <!-- Header -->
+    <header class="bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#2a2a2a] px-6 py-4 flex items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-4">
+            <div class="p-2.5 bg-[#141414] rounded-xl border border-[#2a2a2a] shadow-inner">
+                <i class="ph ph-cpu text-2xl text-[#0ea5e9]"></i>
+            </div>
+            <div>
+                <h1 class="text-base font-semibold tracking-wide text-gray-100 flex items-center gap-2">
+                    AI Study App
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#1e1e1e] border border-[#2a2a2a] text-gray-400">v2.4.1</span>
+                </h1>
+                <p class="text-[11px] text-gray-500 font-mono mt-0.5 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 relative">
+                        <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                    </span>
+                    Flowise Multi-Agent Router Connected
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="p-2 text-gray-400 hover:text-white hover:bg-[#1e1e1e] rounded-lg transition-colors cursor-pointer" title="Clear Session" onclick="clearSession()">
+                <i class="ph ph-trash"></i>
+            </button>
+            <button class="p-2 text-gray-400 hover:text-white hover:bg-[#1e1e1e] rounded-lg transition-colors cursor-pointer" title="Settings">
+                <i class="ph ph-gear-six"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Chat Window -->
+    <main id="chat-container" class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-8 scroll-smooth flex flex-col w-full max-w-4xl mx-auto pb-32">
+
+        <!-- Welcome Message (System) -->
+        <div class="flex flex-col items-start w-full animate-[fadeIn_0.4s_ease-out]">
+            <div class="flex items-center gap-2 mb-1.5 ml-1">
+                <i class="ph-fill ph-check-circle text-emerald-500 text-sm"></i>
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-gray-500">System Router</span>
+                <span class="text-[10px] text-gray-600 font-mono time-stamp"></span>
+            </div>
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl rounded-tl-sm w-full max-w-[90%] md:max-w-[85%] markdown-body">
+                <p>System initialized. I am your specialized AI Study Assistant powered by a Multi-Agent architecture. I can dynamically route your queries to the appropriate expert node.</p>
+                <p>My current active modules include:</p>
+                <ul>
+                    <li><strong>Explainer Node:</strong> Simplifies complex technical concepts.</li>
+                    <li><strong>Planner Node:</strong> Generates structured study roadmaps and tables.</li>
+                    <li><strong>Tester Node:</strong> Provides code examples and logic validation.</li>
+                </ul>
+                <p>How can we accelerate your learning process today?</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Input Area (Sticky Bottom) -->
+    <footer class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/95 to-transparent pt-12 pb-6 px-4 sm:px-6 shrink-0 z-20">
+        <div class="max-w-4xl mx-auto relative flex items-end gap-3">
+
+            <div class="relative flex-1 group">
+                <textarea id="user-input" rows="1"
+                    class="w-full bg-[#141414] text-gray-100 border border-[#2a2a2a] rounded-xl pl-4 pr-12 py-3.5 focus:outline-none focus:border-[#0ea5e9] focus:ring-1 focus:ring-[#0ea5e9] transition-all resize-none shadow-[0_4px_12px_rgba(0,0,0,0.5)] placeholder-gray-600 font-sans leading-relaxed block"
+                    placeholder="Enter your study query (e.g., 'Explain Big O Notation')..."></textarea>
+
+                <!-- Markdown Support Hint -->
+                <div class="absolute -top-6 right-2 flex items-center gap-1 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300">
+                    <i class="ph ph-markdown-logo text-gray-500"></i>
+                    <span class="text-[10px] text-gray-500 font-mono">Markdown Supported</span>
+                </div>
+            </div>
+
+            <button id="send-btn"
+                class="bg-[#0ea5e9] text-white hover:bg-[#0284c7] border border-[#0ea5e9] p-3.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.3)] hover:shadow-[0_0_20px_rgba(14,165,233,0.5)] shrink-0 disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="ph-bold ph-paper-plane-right text-xl"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* Production Grade Colors & Typography */
+:root {
+    --bg-base: #0a0a0a;
+    --bg-surface: #141414;
+    --bg-surface-elevated: #1e1e1e;
+    --border-subtle: #2a2a2a;
+    --accent-primary: #0ea5e9; /* Professional Sky Blue */
+    --accent-primary-dim: rgba(14, 165, 233, 0.15);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-tertiary: #6b7280;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+}
+
+code, pre {
+    font-family: 'Fira Code', monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+/* Subtle Glow Effects */
+.glass-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.user-bubble {
+    background: linear-gradient(145deg, #0c4a6e, #072ac8);
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+/* Enterprise Markdown Rendering Styles */
+.markdown-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+.markdown-body p { margin-bottom: 1.25rem; }
+.markdown-body p:last-child { margin-bottom: 0; }
+
+.markdown-body ul, .markdown-body ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+}
+.markdown-body ul { list-style-type: none; }
+.markdown-body ul li { position: relative; margin-bottom: 0.5rem; }
+.markdown-body ul li::before {
+    content: '→';
+    position: absolute;
+    left: -1.5rem;
+    color: var(--accent-primary);
+    font-weight: bold;
+}
+.markdown-body ol { list-style-type: decimal; color: var(--text-secondary); }
+.markdown-body ol li span { color: var(--text-primary); }
+
+/* Tables */
+.markdown-body table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+}
+.markdown-body th, .markdown-body td {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+}
+.markdown-body th {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.markdown-body tr:last-child td { border-bottom: none; }
+.markdown-body tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
+
+/* Inline Code */
+.markdown-body p code, .markdown-body li code {
+    background-color: var(--bg-surface-elevated);
+    color: #38bdf8;
+    padding: 0.2em 0.4em;
+    border-radius: 0.375rem;
+    font-size: 0.85em;
+    border: 1px solid var(--border-subtle);
+}
+
+/* Code Blocks */
+.markdown-body pre {
+    background-color: #0d1117 !important; /* GitHub Dark dimension */
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    font-size: 0.9em;
+}
+.markdown-body pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    color: inherit;
+}
+
+/* Agent Routing Animation */
+.routing-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.routing-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: pulse-route 1.4s infinite ease-in-out both;
+}
+.routing-dot:nth-child(1) { animation-delay: -0.32s; }
+.routing-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes pulse-route {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px var(--accent-primary); }
+}
