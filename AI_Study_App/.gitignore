@@ -1,0 +1,19 @@
+# Ignore environment files
+.env
+backend/.env
+.env.*
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Virtual env
+.venv/
+venv/
+
+# Editor/temp
+.DS_Store
+.idea/
+*.swp
